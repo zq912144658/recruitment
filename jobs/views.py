@@ -26,4 +26,4 @@ def detail(request,job_id):
         job.city_name = Cities[job.job_city][1]
     except Job.DoesNotExist:
         raise Http404("job st")
-    return render(request,'job.html',{'job':job})
+    return render(request, 'job.html', {'job': job})
