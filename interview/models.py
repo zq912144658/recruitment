@@ -11,7 +11,7 @@ HR_SCORE_TYPE = ((u'S',u'S'),(u'A',u'A'),(u'B',u'B'),(u'C',u'C'))
 INTERVIEW_RESULT_TYPE = ((u'建议录用',u'建议录用'),(u'待定',u'待定'),(u'放弃',u'放弃'))
 class Candidate(models.Model):
 	#基础信息
-	userid = models.IntegerField(unique=True,blank=True,verbose_name=u'应聘者ID')
+	userid = models.IntegerField(unique=True,blank=True,null=True,verbose_name=u'应聘者ID')
 	username = models.CharField(max_length=135,verbose_name=u'姓名')
 	city = models.CharField(max_length=135,verbose_name=u'城市')
 	phone = models.CharField(max_length=135,verbose_name=u'手机号码')
@@ -19,7 +19,7 @@ class Candidate(models.Model):
 	apply_position = models.CharField(max_length=135,blank=True,verbose_name=u'应聘职位')
 	born_address = models.CharField(max_length=135,blank=True,verbose_name=u'生源地')
 	gender = models.CharField(max_length=135,blank=True,verbose_name=u'性别')
-	candidate = models.CharField(max_length=135,blank=True,verbose_name=u'候选人信息备注')
+	candidate_remark = models.CharField(max_length=135,blank=True,verbose_name=u'候选人信息备注')
 	
 	#学校与学历信息
 	bachelor_school = models.CharField(max_length=135,blank=True,verbose_name=u'本科学校')
@@ -29,7 +29,7 @@ class Candidate(models.Model):
 	degree = models.CharField(max_length=135,choices=DEGREE_TYPE,blank=True,verbose_name=u'学历')
 	
 	#综合能力测评成绩,笔试测评成绩
-	test_score_of_general_ability = models.DecimalField(deal_places=1,null=True,max_digits=3,blank=True,verbose_name=u'综合能力测评成绩')
+	test_score_of_general_ability = models.DecimalField(decimal_places=1,null=True,max_digits=3,blank=True,verbose_name=u'综合能力测评成绩')
 	paper_score = models.DecimalField(decimal_places=1,null=True,max_digits=3,blank=True,verbose_name=u'笔试成绩')
 	#第一轮面试
 	first_score = models.DecimalField(decimal_places=1,null=True,max_digits=2,blank=True,verbose_name=u'初试分')
@@ -73,12 +73,12 @@ class Candidate(models.Model):
 	hr_remark = models.CharField(max_length=256,blank=True,verbose_name=u'HR复试备注')
 	
 	creator = models.CharField(max_length=256,blank=True,verbose_name=u'候选人数据的创建人')
-	created_date = models.DateTimeField(max_length=256,blank=True,verbose_name=u'创建时间')
-	modified_date = models.DateTimeField(max_length=256,blank=True,verbose_name=u'更新时间')
+	created_date = models.DateTimeField(auto_now_add=True,verbose_name=u'创建时间')
+	modified_date = models.DateTimeField(auto_now_add=True,verbose_name=u'更新时间')
 	last_editor = models.CharField(max_length=256,blank=True,verbose_name=u'最后编辑者')
 	
 	class Meta:
-		ab_table = 'candidate'
+		db_table = 'candidate'
 		verbose_name = u'应聘者'
 		verbose_name_plural = u'应聘者'
 	
