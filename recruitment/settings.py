@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_python3_ldap',
     'jobs',
     'interview'
 ]
@@ -120,3 +121,27 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+###LADP
+
+#The URL of the LADP server.
+
+LDAP_AUTH_URL = "ladp://10.9.104.144:389"
+
+#Initiate TLS on connection.
+
+LDAP_AUTH_USE_TLS = False
+
+# The LDAP search base for looking up users.
+LADP_AUTH_SEARCH_BASE = "dc="
+# The LDAP class that repressents a user.
+LADP_AUTH_OBJECT_CLASS = ""
+
+# User model fields mapped to the LDAP
+# attributes that represent them.
+LDAP_AUTH_USER_FIELDS = {
+    "username":"cn",
+    "first_name":"",
+    "last_name":"",
+    "email":""
+}
