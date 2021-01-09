@@ -106,7 +106,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'zh-hans'
+LANGUAGE_CODE = 'en-us'
+#zh-hans
 
 TIME_ZONE = 'UTC'
 
@@ -126,22 +127,30 @@ STATIC_URL = '/static/'
 
 #The URL of the LADP server.
 
-LDAP_AUTH_URL = "ladp://10.9.104.144:389"
+LDAP_AUTH_URL = "ldap://192.168.99.100:389"
 
 #Initiate TLS on connection.
 
 LDAP_AUTH_USE_TLS = False
 
 # The LDAP search base for looking up users.
-LADP_AUTH_SEARCH_BASE = "dc="
+LDAP_AUTH_SEARCH_BASE = "dc=ihopeit,dc=com"
 # The LDAP class that repressents a user.
-LADP_AUTH_OBJECT_CLASS = ""
+LDAP_AUTH_OBJECT_CLASS = "inetOrgPerson"
 
 # User model fields mapped to the LDAP
 # attributes that represent them.
 LDAP_AUTH_USER_FIELDS = {
     "username":"cn",
-    "first_name":"",
-    "last_name":"",
-    "email":""
+    "first_name":"givenName",
+    "last_name":"sn",
+    "email":"mail"
 }
+# A tuple of django model fields used to uniquely identify a user.
+LDAP_AUTH_USER_LOOKUP_FIELDS = ("username",)
+LDAP_AUTH_CLEAN_USER_DATA = "django_python3_ldap.utils.clean_user_data"
+
+LDAP_AUTH_CONNECTION_USERNAME = "admin"
+LDAP_AUTH_CONNECTION_PASSWORD = "admin_passwd_4_ldap"
+
+AUTHENTICATION_BACKENDS = {"django_python3_ldap.auth.LDAPBackend",'django.contrib.auth.backends.ModelBackend',}

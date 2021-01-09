@@ -14,7 +14,7 @@ class Candidate(models.Model):
 	userid = models.IntegerField(unique=True,blank=True,null=True,verbose_name=u'应聘者ID')
 	username = models.CharField(max_length=135,verbose_name=u'姓名')
 	city = models.CharField(max_length=135,verbose_name=u'城市')
-	phone = models.CharField(max_length=135,verbose_name=u'手机号码')
+	phone = models.CharField(max_length=11,verbose_name=u'手机号码')
 	email = models.EmailField(max_length=135,blank=135,verbose_name=u'邮箱')
 	apply_position = models.CharField(max_length=135,blank=True,verbose_name=u'应聘职位')
 	born_address = models.CharField(max_length=135,blank=True,verbose_name=u'生源地')
