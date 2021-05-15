@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -106,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 #zh-hans
 
 TIME_ZONE = 'UTC'
@@ -123,6 +124,40 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+LOGGING = {
+    'version':1,
+    'disable_existing_loggers':False,
+    'formatters':{
+        'simple':{
+            'format':'%(asctime)s %(name)-12s %(lineno)d %(levelname)-8s %(message)s',
+        },
+    },
+    'handlers':{
+        'console':{
+            'class':'logging.StreamHandler',
+            'formatter':'simple',
+        },
+        'mail_admins':{
+            'level':'ERROR',
+            'class':'django.utils.log.AdminEmailHandler',
+        },
+        'file':{
+            'class':'logging.FileHandler',
+            'formatter':'simple',
+            'filename':os.path.join(os.path.dirname(BASE_DIR),'recruitment.admin.log'),
+        },
+    },
+    'root':{
+        'handlers':['console','file'],
+        'level':'INFO',
+    },
+    'loggers':{
+        "django_python3_ldap":{
+            "handlers":["console","file"],
+            "level":"DEBUG",
+        }
+    }
+}
 ###LADP
 
 #The URL of the LADP server.
@@ -150,7 +185,7 @@ LDAP_AUTH_USER_FIELDS = {
 LDAP_AUTH_USER_LOOKUP_FIELDS = ("username",)
 LDAP_AUTH_CLEAN_USER_DATA = "django_python3_ldap.utils.clean_user_data"
 
-LDAP_AUTH_CONNECTION_USERNAME = "admin"
-LDAP_AUTH_CONNECTION_PASSWORD = "admin_passwd_4_ldap"
+LDAP_AUTH_CONNECTION_USERNAME = None
+LDAP_AUTH_CONNECTION_PASSWORD = None
 
 AUTHENTICATION_BACKENDS = {"django_python3_ldap.auth.LDAPBackend",'django.contrib.auth.backends.ModelBackend',}

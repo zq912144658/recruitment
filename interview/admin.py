@@ -3,7 +3,9 @@ from interview.models import Candidate
 # Register your models here.
 from datetime import datetime
 from django.http import HttpResponse
+import logging
 import csv
+logger = logging.getLogger(__name__)
 exportable_fields = ('username','city','phone','bachelor_school','master_school','degree','first_result',
                      'first_interviewer','second_result','second_interviewer','hr_result','hr_score','hr_remark','hr_interviewer')
 def export_model_as_csv(modeladmin,request,queryset):
@@ -25,8 +27,10 @@ def export_model_as_csv(modeladmin,request,queryset):
             field_values = field_object.value_from_object(obj)
             csv_line_values.append(field_values)
         writer.writerow(csv_line_values)
-        
+        logger.info("%s exported %s candidate records"% (request.user,len(queryset)))
     return response
+export_model_as_csv.short_description = u'导出为csv文件'
+
 # 候选人管理类
 class CandidateAdmin(admin.ModelAdmin):
     exclude = ('creator','created_date','modified_date')
