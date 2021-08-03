@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -162,7 +163,7 @@ LOGGING = {
 
 #The URL of the LADP server.
 
-LDAP_AUTH_URL = "ldap://192.168.99.100:389"
+LDAP_AUTH_URL = "ldap://localhost:389"
 
 #Initiate TLS on connection.
 
